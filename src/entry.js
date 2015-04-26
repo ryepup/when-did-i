@@ -20,7 +20,6 @@ app.service('EventDb', function($window, $timeout) {
       occurences: []
     };
     self.events.unshift(evt);
-    self.persist();
     return evt;
   };
 

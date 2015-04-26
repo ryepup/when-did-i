@@ -51,8 +51,8 @@
 
           </accordion-heading>
           <div class="row">
-            <div class="col-xs-4">
-              <dl>
+            <div class="col-xs-6">
+              <dl ng-if="evt.last">
                 <dt>Last Seen</dt>
                 <dd>{{ evt.last | date:'EEE yyyy-MM-dd HH:mm' }}</dd>
                 <dt>Times</dt>
@@ -60,17 +60,20 @@
               </dl>
 
             </div>
-            <div class="col-xs-4 col-md-6"></div>
-            <div class="col-xs-4 col-md-2">
-              <button class="btn btn-primary pull-left"
-                      ng-click="vm.record(evt)"
-                      >Now</button>
-              &nbsp;
-              <button class="btn btn-primary" disabled="disabled">
+            <div class="col-xs-2">
+              <button class="btn btn-large btn-primary pull-left"
+                      ng-click="vm.record(evt)">
+                Now</button>
+            </div>
+            <div class="col-xs-2">
+              <button class="btn btn-large btn-primary" disabled="disabled">
                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
               </button>
-              <button class="btn btn-danger pull-right" ng-click="vm.remove(evt)">X</button>
-
+            </div>
+            <div class="col-xs-2">
+              <button class="btn btn-danger" ng-click="vm.remove(evt)">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
             </div>
           </div>
 
