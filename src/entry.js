@@ -1,6 +1,4 @@
-window.jQuery = require('jquery');
 var angular = require('angular');
-require('bootstrap');
 require('angular-bootstrap');
 var moment = require('moment');
 
