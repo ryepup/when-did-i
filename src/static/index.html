@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When did I...</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+  </head>
+  <body ng-app="WhenDidI" ng-controller="HomeCtrl as vm">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">When Did I Last?</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="New Event"
+                     ng-model="vm.newEventName">
+            </div>
+            <button type="submit" class="btn btn-default"
+                    ng-click="vm.addNewEvent()">Add</button>
+          </form>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container-fluid" ng-cloak>
+      <accordion close-others="true">
+        <accordion-group ng-repeat="evt in vm.events | orderBy:'last':true"
+                         is-open="evt.open">
+          <accordion-heading>
+            <div class="clear-float">
+              <strong>{{ evt.name }}</strong>
+              <span class="pull-right">{{ evt.last | age}}</span>
+            </div>
+
+          </accordion-heading>
+          <div class="row">
+            <div class="col-xs-4">
+              <dl>
+                <dt>Last Seen</dt>
+                <dd>{{ evt.last | date:'EEE yyyy-MM-dd HH:mm' }}</dd>
+                <dt>Times</dt>
+                <dd>{{ evt.occurences.length }}</dd>
+              </dl>
+
+            </div>
+            <div class="col-xs-4 col-md-6"></div>
+            <div class="col-xs-4 col-md-2">
+              <button class="btn btn-primary pull-left"
+                      ng-click="vm.record(evt)"
+                      >Now</button>
+              &nbsp;
+              <button class="btn btn-primary" disabled="disabled">
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+              </button>
+              <button class="btn btn-danger pull-right" ng-click="vm.remove(evt)">X</button>
+
+            </div>
+          </div>
+
+        </accordion-group>
+      </accordion>
+    </div>
+  </body>
+  <script src="http://localhost:9091"></script>
+  <script src="bundle.js"></script>
+</html>
