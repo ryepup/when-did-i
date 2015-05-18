@@ -1,10 +1,9 @@
-window.jQuery = require('jquery');
-require('bootstrap');
 var angular = require('angular');
-require('angular-bootstrap');
 var moment = require('moment');
 
-var app = angular.module('WhenDidI', ['ui.bootstrap']);
+var app = angular.module('WhenDidI', ['ngMaterial']);
+
+app.value('moment', moment);
 
 app.service('EventDb', function($window, $timeout) {
   var self = this, STORAGE = 'events';
@@ -23,8 +22,8 @@ app.service('EventDb', function($window, $timeout) {
     return evt;
   };
 
-  self.record = function(evt) {
-    evt.last = new Date();
+  self.record = function(evt, date) {
+    evt.last = date || new Date();
     evt.occurences.push(evt.last);
     self.persist();
   };
@@ -50,14 +49,50 @@ app.filter('age', function() {
   };
 });
 
-app.controller('HomeCtrl', function(EventDb, $log) {
+app.controller('HomeCtrl', function(EventDb, $log, $mdBottomSheet, $mdDialog) {
   var vm = this;
   vm.events = EventDb.events;
-  vm.addNewEvent = function() {
-    var evt = EventDb.addEvent(vm.newEventName);
-    evt.open = true;
-    vm.newEventName = '';
+
+  vm.edit = function($event, evt) {
+    $mdBottomSheet.show({
+      templateUrl:'/settings.html',
+      controller: 'EventDetailCtrl',
+      controllerAs: 'vm',
+      locals: {selectedEvent : evt},
+      targetEvent: $event
+    })
+      .then(function(date) {
+        EventDb.record(evt, date);
+      });
   };
-  vm.record = EventDb.record;
-  vm.remove = EventDb.remove;
+
+  vm.add = function($event) {
+    $mdDialog.show({
+      templateUrl:'/add.html',
+      controller: 'EventAddCtrl',
+      controllerAs: 'vm',
+      targetEvent: $event
+    }).then(function(name) {
+      var evt = EventDb.addEvent(name);
+      vm.edit(null, evt);
+    });
+  };
+});
+
+app.controller('EventAddCtrl', function($mdDialog) {
+  var vm = this;
+  vm.save = function(name) { $mdDialog.hide(name); };
+  vm.cancel = $mdDialog.cancel;
+});
+
+app.controller('EventDetailCtrl', function($log, $mdBottomSheet, moment, selectedEvent) {
+  var vm = this;
+  vm.evt = selectedEvent;
+  vm.daysAgo = function(days) {
+    $mdBottomSheet.hide(moment().subtract(days, 'days').toDate());
+  };
+});
+
+app.config(function($mdThemingProvider){
+  $mdThemingProvider.theme('default');
 });

@@ -3,84 +3,74 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>When did I...</title>
 
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">
+    <style>
 
+    </style>
   </head>
-  <body ng-app="WhenDidI" ng-controller="HomeCtrl as vm">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">When Did I Last?</a>
+  <body  ng-app="WhenDidI" ng-controller="HomeCtrl as vm" layout="column">
+
+    <md-toolbar layout="row">
+      <div class="md-toolbar-tools">
+        <span>When did I...</span>
+        <!-- fill up the space between left and right area -->
+        <span flex></span>
+        <md-button ng-click="vm.add($event)" class="md-raised">Add</md-button>
+      </div>
+    </md-toolbar>
+
+    <md-content>
+      <md-grid-list md-cols="6" md-gutter="1em" md-row-height="4:3">
+        <md-grid-tile ng-repeat="evt in vm.events | orderBy:'last':true"
+                      ng-click="vm.edit($event, evt)">
+          {{ evt.name }}
+        </md-grid-tile>
+      </md-grid-list>
+    </md-content>
+
+    <script type="text/ng-template" id="/settings.html">
+      <md-bottom-sheet>
+        <h2>{{ vm.evt.name }}</h2>
+
+        <div layout="column" layout-align="start center">
+          <span flex>Recent: {{ vm.evt.last | date }}</span>
+          <span flex>Total: {{ vm.evt.occurences.length }}</span>
         </div>
+        <md-divider></md-divider>
+        <div layout="column" layout-margin="1em" layout-align="space-around center">
+          <md-button flex class="md-raised" ng-click="vm.daysAgo(0)">Today</md-button>
+          <md-button flex class="md-raised" ng-click="vm.daysAgo(1)">Yesterday</md-button>
+        </div>
+      </md-bottom-sheet>
+    </script>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="New Event"
-                     ng-model="vm.newEventName">
-            </div>
-            <button type="submit" class="btn btn-default"
-                    ng-click="vm.addNewEvent()">Add</button>
-          </form>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-    <div class="container-fluid" ng-cloak>
-      <accordion close-others="true">
-        <accordion-group ng-repeat="evt in vm.events | orderBy:'last':true"
-                         is-open="evt.open">
-          <accordion-heading>
-            <div class="clear-float">
-              <strong>{{ evt.name }}</strong>
-              <span class="pull-right">{{ evt.last | age}}</span>
-            </div>
 
-          </accordion-heading>
-          <div class="row">
-            <div class="col-xs-6">
-              <dl ng-if="evt.last">
-                <dt>Last Seen</dt>
-                <dd>{{ evt.last | date:'EEE yyyy-MM-dd HH:mm' }}</dd>
-                <dt>Times</dt>
-                <dd>{{ evt.occurences.length }}</dd>
-              </dl>
-
-            </div>
-            <div class="col-xs-2">
-              <button class="btn btn-large btn-primary pull-left"
-                      ng-click="vm.record(evt)">
-                Now</button>
-            </div>
-            <div class="col-xs-2">
-              <button class="btn btn-large btn-primary" disabled="disabled">
-                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-              </button>
-            </div>
-            <div class="col-xs-2">
-              <button class="btn btn-danger" ng-click="vm.remove(evt)">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-              </button>
-            </div>
+    <script type="text/ng-template" id="/add.html">
+      <md-dialog>
+        <form name="newEvent">
+          <md-dialog-content>
+            <md-input-container>
+              <label>Name</label>
+              <input type="text" name="name" ng-model="vm.name" required>
+            </md-input-container>
+          </md-dialog-content>
+          <div class="md-actions">
+            <md-button ng-click="vm.save(vm.name)">Ok</md-button>
+            <md-button ng-click="vm.cancel()">Cancel</md-button>
           </div>
+        </form>
+      </md-dialog>
+    </script>
 
-        </accordion-group>
-      </accordion>
-    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+    <script src="bundle.js"></script>
+    <script src="http://localhost:9091"></script>
   </body>
-  <script src="http://localhost:9091"></script>
-  <script src="bundle.js"></script>
 </html>
