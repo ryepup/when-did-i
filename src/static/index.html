@@ -9,6 +9,23 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic">
     <style>
+      #events md-grid-tile {
+      color: #ddd;
+      }
+
+#events md-grid-tile:nth-child(4n+1){
+  background-color: #F44336;
+}
+#events md-grid-tile:nth-child(4n+2){
+  background-color: #E91E63;
+}
+#events md-grid-tile:nth-child(4n+3){
+  background-color: #9C27B0;
+}
+#events md-grid-tile:nth-child(4n+4){
+  background-color: #009688;
+}
+
 
     </style>
   </head>
@@ -24,9 +41,10 @@
     </md-toolbar>
 
     <md-content layout-padding flex>
-      <md-grid-list md-gutter="1em" md-cols="6" md-cols-sm="3" md-row-height="4:3">
+      <md-grid-list md-gutter="1em" md-cols="6" md-cols-sm="3" md-row-height="4:3" id="events">
         <md-grid-tile ng-repeat="evt in vm.events | orderBy:'last':true"
-                      ng-click="vm.edit($event, evt)">
+                      ng-click="vm.edit($event, evt)"
+                      class="md-body-2">
           {{ evt.name }}
         </md-grid-tile>
       </md-grid-list>
