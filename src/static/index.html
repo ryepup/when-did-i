@@ -24,7 +24,7 @@
     </md-toolbar>
 
     <md-content layout-padding flex>
-      <md-grid-list md-gutter="1em" md-cols="6" md-row-height="4:3">
+      <md-grid-list md-gutter="1em" md-cols="6" md-cols-sm="3" md-row-height="4:3">
         <md-grid-tile ng-repeat="evt in vm.events | orderBy:'last':true"
                       ng-click="vm.edit($event, evt)">
           {{ evt.name }}
