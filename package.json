@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-js": "browserify src/entry.js -d -o build/bundle.js",
-    "build-css": "cp -R ./node_modules/bootstrap/dist/* build/",
-    "build": "mkdir -p build && npm run build-js && npm run build-css && cp src/static/* build/",
+    "build": "mkdir -p build && npm run build-js && cp src/static/* build/",
     "start": "watch 'npm run build' src/ & live-reload --port 9091 ./build/* & ws -d ./build"
   },
   "browserify": {
