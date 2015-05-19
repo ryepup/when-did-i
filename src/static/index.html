@@ -55,7 +55,7 @@
         <h2>{{ vm.evt.name }}</h2>
 
         <div layout="column" layout-align="start center">
-          <span flex>Recent: {{ vm.evt.last | date }}</span>
+          <span flex>Recent: {{ vm.evt.last | date }} ({{ vm.evt.last | age }})</span>
           <span flex>Total: {{ vm.evt.occurences.length }}</span>
         </div>
         <md-divider></md-divider>
