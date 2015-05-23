@@ -13,18 +13,32 @@
       color: #ddd;
       }
 
-#events md-grid-tile:nth-child(4n+1){
+#events md-grid-tile:nth-child(7n+1){
   background-color: #F44336;
 }
-#events md-grid-tile:nth-child(4n+2){
+#events md-grid-tile:nth-child(7n+2){
   background-color: #E91E63;
 }
-#events md-grid-tile:nth-child(4n+3){
+#events md-grid-tile:nth-child(7n+3){
   background-color: #9C27B0;
 }
-#events md-grid-tile:nth-child(4n+4){
+#events md-grid-tile:nth-child(7n+4){
   background-color: #009688;
 }
+
+#events md-grid-tile:nth-child(7n+5){
+  background-color: #673AB7;
+}
+
+#events md-grid-tile:nth-child(7n+6){
+  background-color: #3F51B5;
+}
+
+#events md-grid-tile:nth-child(7n+7){
+  background-color: #2196F3;
+}
+
+#add-time button { padding:1em; }
 
 
     </style>
@@ -41,7 +55,7 @@
     </md-toolbar>
 
     <md-content layout-padding flex>
-      <md-grid-list md-gutter="1em" md-cols="6" md-cols-sm="3" md-row-height="4:3" id="events">
+      <md-grid-list md-gutter="1em" md-cols="4" md-cols-sm="2" md-cols-lg="6" md-cols-gt-lg="8" md-row-height="4:3" id="events">
         <md-grid-tile ng-repeat="evt in vm.events | orderBy:'last':true"
                       ng-click="vm.edit($event, evt)"
                       class="md-body-2">
@@ -59,9 +73,9 @@
           <span flex>Total: {{ vm.evt.occurences.length }}</span>
         </div>
         <md-divider></md-divider>
-        <div layout="column" layout-margin="1em" layout-align="space-around center">
-          <md-button flex class="md-raised" ng-click="vm.daysAgo(0)">Today</md-button>
-          <md-button flex class="md-raised" ng-click="vm.daysAgo(1)">Yesterday</md-button>
+        <div layout="row" layout-padding layout-align="space-around center" id="add-time">
+          <md-button flex="33" class="md-raised md-primary" ng-click="vm.daysAgo(0)">Today</md-button>
+          <md-button flex="33" class="md-raised md-accent" ng-click="vm.daysAgo(1)">Yesterday</md-button>
         </div>
       </md-bottom-sheet>
     </script>
@@ -70,15 +84,18 @@
     <script type="text/ng-template" id="/add.html">
       <md-dialog>
         <form name="newEvent">
-          <md-dialog-content>
+    <md-dialog-content>
+    <div layout="column" layout-margin>
+            <h3>Add new event</h3>
             <md-input-container>
               <label>Name</label>
               <input type="text" name="name" ng-model="vm.name" required>
-            </md-input-container>
+    </md-input-container>
+    </div>
           </md-dialog-content>
           <div class="md-actions">
-            <md-button ng-click="vm.save(vm.name)">Ok</md-button>
-            <md-button ng-click="vm.cancel()">Cancel</md-button>
+            <md-button class="md-raised md-primary" ng-click="vm.save(vm.name)">Ok</md-button>
+            <a href="#" ng-click="vm.cancel()">Cancel</a>
           </div>
         </form>
       </md-dialog>
