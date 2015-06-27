@@ -34,4 +34,11 @@ module.exports = function($window, $timeout) {
       $window.localStorage.setItem(STORAGE, angular.toJson(self.events));
     });
   };
+
+  self.find = function(name) {
+    var matches = self.events.filter(function(evt) {
+      return evt.name == name;
+    });
+    return (matches.length > 0) ? matches[0] : null;
+  };
 };

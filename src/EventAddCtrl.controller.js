@@ -1,7 +1,9 @@
 'use strict';
 
-module.exports = function($mdDialog) {
+module.exports = function($mdDialog, EventDb, $state) {
   var vm = this;
-  vm.save = function(name) { $mdDialog.hide(name); };
-  vm.cancel = $mdDialog.cancel;
+  vm.save = function(name) {
+    var evt = EventDb.addEvent(name);
+    $state.go('home.edit', {name:name});
+  };
 };
