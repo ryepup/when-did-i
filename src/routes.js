@@ -5,7 +5,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: '/home.html',
+      templateUrl: 'home.html',
       controller: 'HomeCtrl as vm'
     })
     .state('home.edit', {
@@ -18,7 +18,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
       onEnter: function(evt, $mdBottomSheet, $state) {
         $mdBottomSheet
           .show({
-            templateUrl:'/settings.html',
+            templateUrl:'settings.html',
             controller: 'EventDetailCtrl',
             controllerAs: 'vm',
             locals: {selectedEvent : evt}
@@ -31,7 +31,7 @@ module.exports = function($stateProvider, $urlRouterProvider) {
     })
     .state('add', {
       url: '/add',
-      templateUrl: '/add.html',
+      templateUrl: 'add.html',
       controller: 'EventAddCtrl as vm'
     });
 };

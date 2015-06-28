@@ -1,0 +1,13 @@
+<md-bottom-sheet>
+  <h2>{{ vm.evt.name }}</h2>
+
+  <div layout="column" layout-align="start center">
+    <span flex>Recent: {{ vm.evt.last | date }} ({{ vm.evt.last | age }})</span>
+    <span flex>Total: {{ vm.evt.occurences.length }}</span>
+  </div>
+  <md-divider></md-divider>
+  <div layout="row" layout-padding layout-align="space-around center" id="add-time">
+    <md-button flex="33" class="md-raised md-primary" ng-click="vm.daysAgo(0)">Today</md-button>
+    <md-button flex="33" class="md-raised md-accent" ng-click="vm.daysAgo(1)">Yesterday</md-button>
+  </div>
+</md-bottom-sheet>
